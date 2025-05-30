@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.componentId }}
+  description: Microservicio generado con plantilla Spring Boot
+  tags:
+    - java
+    - springboot
+spec:
+  type: service
+  owner: user:guest
+  lifecycle: experimental
