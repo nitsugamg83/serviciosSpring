@@ -42,9 +42,8 @@ spec:
       name: Descargar template
       action: fetch:template
       input:
-        url: ./skeleton/${{ parameters.artifactId }}
+        url: ./skeleton
         targetPath: .
-
         values:
           componentId: ${{ parameters.componentId }}
           groupId: ${{ parameters.groupId }}
@@ -64,7 +63,7 @@ spec:
       action: catalog:register
       input:
         repoContentsUrl: "${{ steps.publish.output.repoContentsUrl }}"
-        catalogInfoPath: /catalog-info.yaml
+        catalogInfoPath: "/${{ parameters.artifactId }}/catalog-info.yaml"
 
   output:
     links:
