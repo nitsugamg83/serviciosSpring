@@ -17,25 +17,17 @@ spec:
         - componentId
         - groupId
         - artifactId
-        - version
-        - description
       properties:
         componentId:
           type: string
           title: Nombre del componente
+          description: Nombre único del microservicio
         groupId:
           type: string
           title: GroupId del proyecto (paquete base)
         artifactId:
           type: string
           title: ArtifactId raíz (nombre del microservicio)
-        version:
-          type: string
-          title: Versión
-          default: 1.0.0-SNAPSHOT
-        description:
-          type: string
-          title: Descripción del microservicio
 
   steps:
     - id: fetch
@@ -45,11 +37,34 @@ spec:
         url: ./skeleton
         targetPath: .
         values:
-          componentId: ${{ parameters.componentId }}
-          groupId: ${{ parameters.groupId }}
-          artifactId: ${{ parameters.artifactId }}
-          version: ${{ parameters.version }}
-          description: ${{ parameters.description }}
+          componentId: "${{ parameters.componentId }}"
+          groupId: "${{ parameters.groupId }}"
+          artifactId: "${{ parameters.artifactId }}"
+
+    - id: replace-identifiers
+      name: Reemplazar groupId y artifactId
+      action: search-and-replace:replace
+      input:
+        dir: "./${{ parameters.artifactId }}"
+        replacements:
+          - search: "axity.mbtransfers"
+            replaceWith: "${{ parameters.groupId }}"
+          - search: "mb-transfers"
+            replaceWith: "${{ parameters.artifactId }}"
+          - search: "artifactId>mb-transfers-"
+            replaceWith: "artifactId>${{ parameters.artifactId }}-"
+          - search: "name>mb-transfers-"
+            replaceWith: "name>${{ parameters.artifactId }}-"
+          - search: "module>mb-transfers-"
+            replaceWith: "module>${{ parameters.artifactId }}-"
+
+    - id: move-to-root
+      name: Mover microservicio a raíz
+      action: filesystem:copy
+      input:
+        files:
+          - from: "./${{ parameters.artifactId }}/"
+            to: "./"
 
     - id: publish
       name: Publicar en GitHub
@@ -59,7 +74,7 @@ spec:
         repoVisibility: public
 
     - id: register
-      name: Registrar en el catálogo
+      name: Registrar componente
       action: catalog:register
       input:
         repoContentsUrl: "${{ steps.publish.output.repoContentsUrl }}"
