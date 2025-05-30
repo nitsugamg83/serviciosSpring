@@ -42,22 +42,15 @@ spec:
       name: Descargar template
       action: fetch:template
       input:
-        url: ./skeleton
+        url: ./skeleton/${{ parameters.artifactId }}
         targetPath: .
+
         values:
           componentId: ${{ parameters.componentId }}
           groupId: ${{ parameters.groupId }}
           artifactId: ${{ parameters.artifactId }}
           version: ${{ parameters.version }}
           description: ${{ parameters.description }}
-
-    - id: move-content
-      name: Mover contenido del microservicio
-      action: filesystem:rename
-      input:
-        files:
-          - from: "./${{ parameters.artifactId }}"
-            to: "./"
 
     - id: publish
       name: Publicar en GitHub
