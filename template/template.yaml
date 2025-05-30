@@ -25,9 +25,11 @@ spec:
         groupId:
           type: string
           title: GroupId del proyecto (paquete base)
+          default: com.ejemplo.servicio
         artifactId:
           type: string
           title: ArtifactId raíz (nombre del microservicio)
+          default: nombre-microservicio
 
   steps:
     - id: fetch
@@ -46,11 +48,11 @@ spec:
       action: filesystem:move
       input:
         files:
-          - from: './mb-transfers'
+          - from: ./mb-transfers
             to: "./${{ parameters.artifactId }}"
 
-    - id: replace-strings
-      name: Reemplazar groupId/artifactId
+    - id: replace-identifiers
+      name: Reemplazar groupId y artifactId
       action: search:replace
       input:
         dir: "./${{ parameters.artifactId }}"
@@ -59,19 +61,14 @@ spec:
             replaceWith: "${{ parameters.groupId }}"
           - search: "mb-transfers"
             replaceWith: "${{ parameters.artifactId }}"
-
-    - id: replace-modules
-      name: Reemplazar nombres de artefactos hijos
-      action: search:replace
-      input:
-        dir: "./${{ parameters.artifactId }}"
-        replacements:
           - search: "artifactId>mb-transfers-"
             replaceWith: "artifactId>${{ parameters.artifactId }}-"
           - search: "name>mb-transfers-"
             replaceWith: "name>${{ parameters.artifactId }}-"
+          - search: "module>mb-transfers-"
+            replaceWith: "module>${{ parameters.artifactId }}-"
 
-    - id: rename-module-folders
+    - id: rename-modules
       name: Renombrar carpetas de módulos hijos
       action: filesystem:move
       input:
