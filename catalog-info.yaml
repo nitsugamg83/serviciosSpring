@@ -5,4 +5,4 @@ metadata:
   description: Location de template Spring Boot
 spec:
   type: url
-  target: https://raw.githubusercontent.com/nitsugamg83/serviciosSpring/main/templates/template.yaml
+  target: https://raw.githubusercontent.com/nitsugamg83/serviciosSpring/main/template/template.yaml
