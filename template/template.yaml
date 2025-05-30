@@ -19,12 +19,13 @@ spec:
           type: string
           title: Nombre del componente
           description: Nombre único
+
   steps:
     - id: fetch
       name: Descargar template
       action: fetch:template
       input:
-        url: ./skeleton
+        url: github:nitsugamg83/serviciosSpring
         values:
           componentId: ${{ parameters.componentId }}
 
