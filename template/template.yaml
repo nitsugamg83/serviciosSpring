@@ -62,6 +62,37 @@ spec:
           - search: 'mb-transfers'
             replaceWith: ${{ parameters.artifactId }}
 
+    - id: rename-modules
+      name: Renombrar carpetas de módulos
+      action: filesystem:move
+      input:
+        files:
+          - from: './${{ parameters.artifactId }}/mb-transfers-commons'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-commons'
+          - from: './${{ parameters.artifactId }}/mb-transfers-model'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-model'
+          - from: './${{ parameters.artifactId }}/mb-transfers-persistence'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-persistence'
+          - from: './${{ parameters.artifactId }}/mb-transfers-service'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-service'
+          - from: './${{ parameters.artifactId }}/mb-transfers-facade'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-facade'
+          - from: './${{ parameters.artifactId }}/mb-transfers-api'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-api'
+          - from: './${{ parameters.artifactId }}/coverage-module'
+            to: './${{ parameters.artifactId }}/${{ parameters.artifactId }}-coverage'
+
+    - id: replace-modules
+      name: Reemplazar nombres de artefactos hijos
+      action: search:replace
+      input:
+        dir: './${{ parameters.artifactId }}'
+        replacements:
+          - search: 'artifactId>mb-transfers-'
+            replaceWith: 'artifactId>${{ parameters.artifactId }}-'
+          - search: 'name>mb-transfers-'
+            replaceWith: 'name>${{ parameters.artifactId }}-'
+
     - id: publish
       name: Publicar en GitHub
       action: publish:github
