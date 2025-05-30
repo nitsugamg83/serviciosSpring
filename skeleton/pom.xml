@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.5</version>
+    <relativePath />
+  </parent>
+
+  <groupId>${project.groupId}</groupId>
+  <artifactId>${project.artifactId}</artifactId>
+  <version>${project.version}</version>
+  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <description>${project.description}</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <jackson.version>2.13.3</jackson.version>
+    <jacoco.version>0.8.8</jacoco.version>
+    <maven-eclipse-plugin.version>3.13.0</maven-eclipse-plugin.version>
+    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+    <sonar.projectName>${project.artifactId}</sonar.projectName>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Submódulos -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}-commons</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}-model</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}-persistence</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}-facade</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- Dependencias comunes -->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.30</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.10.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.10.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>5.11.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.persistence</groupId>
+        <artifactId>jakarta.persistence-api</artifactId>
+        <version>3.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-core</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>5.1.0</version>
+        <classifier>jakarta</classifier>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+        <version>2.5.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-webflux</artifactId>
+        <version>3.3.5</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <modules>
+    <module>${project.artifactId}-commons</module>
+    <module>${project.artifactId}-model</module>
+    <module>${project.artifactId}-persistence</module>
+    <module>${project.artifactId}-service</module>
+    <module>${project.artifactId}-facade</module>
+    <module>${project.artifactId}-api</module>
+    <module>coverage-module</module>
+  </modules>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-site</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.9.1.2184</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>8.4.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

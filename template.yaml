@@ -1,0 +1,62 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: java-springboot-service
+  title: Java Spring Boot Microservice
+  description: Genera un microservicio base en Java 17 con Spring Boot 3.3.5, WebClient y estructura modular
+spec:
+  owner: team-platform
+  type: service
+
+  parameters:
+    - title: Información del microservicio
+      required:
+        - name
+        - groupId
+        - artifactId
+      properties:
+        name:
+          type: string
+          title: Nombre del componente
+          description: Ej. transfers-api
+        groupId:
+          type: string
+          title: groupId (Java Package)
+          description: Ej. com.empresa.servicios
+          pattern: '^[a-zA-Z_][a-zA-Z0-9_.]*$'
+        artifactId:
+          type: string
+          title: artifactId
+          description: Ej. transfers
+          pattern: '^[a-zA-Z0-9_.-]+$'
+
+  steps:
+    - id: fetch-template
+      name: Obtener base
+      action: fetch:template
+      input:
+        url: https://github.com/nitsugamg83/serviciosSpring/tree/main/skeleton
+        targetPath: ./work
+        values:
+          name: ${{ parameters.name }}
+          groupId: ${{ parameters.groupId }}
+          artifactId: ${{ parameters.artifactId }}
+
+    - id: rename-folder
+      name: Renombrar carpeta raíz
+      action: filesystem:move
+      input:
+        files:
+          - from: './work/mb-transfers'
+            to: './${{ parameters.artifactId }}'
+
+    - id: log-result
+      name: Éxito
+      action: debug:log
+      input:
+        message: Microservicio ${{ parameters.artifactId }} generado correctamente.
+
+  output:
+    links:
+      - title: Ver resultado en carpeta
+        url: ./${{ parameters.artifactId }}
