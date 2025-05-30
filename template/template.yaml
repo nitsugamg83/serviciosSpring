@@ -31,15 +31,15 @@ spec:
           title: ArtifactId raíz (nombre del microservicio)
         version:
           type: string
-          title: Versión del proyecto
+          title: Versión
           default: 1.0.0-SNAPSHOT
         description:
           type: string
-          title: Descripción
+          title: Descripción del microservicio
 
   steps:
     - id: fetch
-      name: Descargar y personalizar template
+      name: Descargar template
       action: fetch:template
       input:
         url: ./skeleton
@@ -59,7 +59,7 @@ spec:
         repoVisibility: public
 
     - id: register
-      name: Registrar componente en catálogo
+      name: Registrar en el catálogo
       action: catalog:register
       input:
         repoContentsUrl: "${{ steps.publish.output.repoContentsUrl }}"
