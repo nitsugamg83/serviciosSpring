@@ -32,7 +32,7 @@ spec:
       name: Publicar en GitHub
       action: publish:github
       input:
-        repoUrl: github.com/nitsugamg83/${{ parameters.componentId }}
+        repoUrl: github.com?repo=${{ parameters.componentId }}&owner=nitsugamg83
         repoVisibility: public
 
     - id: register
