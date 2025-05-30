@@ -19,15 +19,15 @@ spec:
         componentId:
           type: string
           title: Nombre del componente
-          description: Nombre único del microservicio
+          description: Nombre único
 
   steps:
     - id: fetch
       name: Descargar template
       action: fetch:template
       input:
-        url: ./skeleton
-        targetPath: .
+        url: https://github.com/nitsugamg83/serviciosSpring/archive/refs/heads/main.zip
+        subdir: template/skeleton
         values:
           componentId: ${{ parameters.componentId }}
 
@@ -37,12 +37,13 @@ spec:
       input:
         repoUrl: github.com?repo=${{ parameters.componentId }}&owner=nitsugamg83
         repoVisibility: public
+        defaultBranch: main
 
     - id: register
       name: Registrar componente
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        repoContentsUrl: https://raw.githubusercontent.com/nitsugamg83/${{ parameters.componentId }}/main/catalog-info.yaml
         catalogInfoPath: /catalog-info.yaml
 
   output:
