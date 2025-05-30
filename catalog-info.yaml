@@ -1,0 +1,46 @@
+# catalog-info.yaml
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: springboot-template
+  title: Spring Boot Microservice
+  description: Scaffold a basic Spring Boot service
+  tags:
+    - java
+    - springboot
+spec:
+  owner: user:guest
+  type: service
+  parameters:
+    - title: Información del componente
+      required:
+        - componentId
+      properties:
+        componentId:
+          type: string
+          title: Nombre del componente
+          description: Nombre único
+  steps:
+    - id: fetch
+      name: Descargar template
+      action: fetch:template
+      input:
+        url: https://github.com/tu-org/tu-repo/archive/main.zip
+        values:
+          componentId: ${{ parameters.componentId }}
+    - id: publish
+      name: Publicar en GitHub
+      action: publish:github
+      input:
+        repoUrl: github.com/tu-org/${{ parameters.componentId }}
+        repoVisibility: public
+    - id: register
+      name: Registrar componente
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+  output:
+    links:
+      - title: Ver repositorio en GitHub
+        url: ${{ steps.publish.output.remoteUrl }}
