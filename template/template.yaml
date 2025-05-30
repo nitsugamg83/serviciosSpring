@@ -26,8 +26,7 @@ spec:
       name: Descargar template
       action: fetch:template
       input:
-        url: https://github.com/nitsugamg83/serviciosSpring/archive/refs/heads/main.zip
-        subdir: template/skeleton
+        url: ./skeleton
         targetPath: .
         values:
           componentId: ${{ parameters.componentId }}
