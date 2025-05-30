@@ -10,6 +10,7 @@ metadata:
 spec:
   owner: user:guest
   type: service
+
   parameters:
     - title: Información del componente
       required:
@@ -18,14 +19,15 @@ spec:
         componentId:
           type: string
           title: Nombre del componente
-          description: Nombre único
+          description: Nombre único del microservicio
 
   steps:
     - id: fetch
       name: Descargar template
       action: fetch:template
       input:
-        url: github:nitsugamg83/serviciosSpring
+        url: ./skeleton
+        targetPath: .
         values:
           componentId: ${{ parameters.componentId }}
 

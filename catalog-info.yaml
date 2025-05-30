@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
-  name: springboot-template
-  description: Plantilla para generar microservicios en Spring Boot
+  name: springboot-template-location
+  description: Location de template Spring Boot
 spec:
-  targets:
-    - ./template.yaml
+  type: url
+  target: https://raw.githubusercontent.com/nitsugamg83/serviciosSpring/main/templates/template.yaml
