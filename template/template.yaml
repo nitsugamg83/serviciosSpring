@@ -25,11 +25,9 @@ spec:
         groupId:
           type: string
           title: GroupId del proyecto (paquete base)
-          default: com.ejemplo.servicio
         artifactId:
           type: string
           title: ArtifactId raíz (nombre del microservicio)
-          default: mb-transfers
 
   steps:
     - id: fetch
@@ -51,26 +49,8 @@ spec:
           - from: './mb-transfers'
             to: "./${{ parameters.artifactId }}"
 
-    - id: rename-submodules
-      name: Renombrar carpetas internas
-      action: filesystem:rename
-      input:
-        files:
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-api"
-            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-api"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-commons"
-            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-commons"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-facade"
-            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-facade"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-model"
-            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-model"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-persistence"
-            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-persistence"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-service"
-            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-service"
-
-    - id: replace
-      name: Reemplazar groupId/artifactId en archivos
+    - id: replace-strings
+      name: Reemplazar groupId/artifactId
       action: search:replace
       input:
         dir: "./${{ parameters.artifactId }}"
@@ -90,6 +70,24 @@ spec:
             replaceWith: "artifactId>${{ parameters.artifactId }}-"
           - search: "name>mb-transfers-"
             replaceWith: "name>${{ parameters.artifactId }}-"
+
+    - id: rename-module-folders
+      name: Renombrar carpetas de módulos hijos
+      action: filesystem:move
+      input:
+        files:
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-api"
+            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-api"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-commons"
+            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-commons"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-model"
+            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-model"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-persistence"
+            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-persistence"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-service"
+            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-service"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-facade"
+            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-facade"
 
     - id: publish
       name: Publicar en GitHub
