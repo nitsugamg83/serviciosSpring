@@ -1,8 +1,0 @@
-apiVersion: backstage.io/v1alpha1
-kind: Location
-metadata:
-  name: springboot-template-location
-  description: Location de template Spring Boot
-spec:
-  type: url
-  target: https://github.com/nitsugamg83/serviciosSpring/blob/main/template/template.yaml
