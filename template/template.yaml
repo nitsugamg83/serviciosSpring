@@ -17,46 +17,39 @@ spec:
         - componentId
         - groupId
         - artifactId
+        - version
+        - description
       properties:
         componentId:
           type: string
           title: Nombre del componente
-          description: Nombre único del microservicio
         groupId:
           type: string
           title: GroupId del proyecto (paquete base)
         artifactId:
           type: string
           title: ArtifactId raíz (nombre del microservicio)
+        version:
+          type: string
+          title: Versión del proyecto
+          default: 1.0.0-SNAPSHOT
+        description:
+          type: string
+          title: Descripción
 
   steps:
     - id: fetch
-      name: Descargar template
+      name: Descargar y personalizar template
       action: fetch:template
       input:
         url: ./skeleton
-        targetPath: ./
+        targetPath: .
         values:
           componentId: ${{ parameters.componentId }}
           groupId: ${{ parameters.groupId }}
           artifactId: ${{ parameters.artifactId }}
-
-    - id: replace-identifiers
-      name: Reemplazar groupId y artifactId
-      action: search:replace
-      input:
-        dir: .
-        replacements:
-          - search: "axity.mbtransfers"
-            replaceWith: "${{ parameters.groupId }}"
-          - search: "mb-transfers"
-            replaceWith: "${{ parameters.artifactId }}"
-          - search: "artifactId>mb-transfers-"
-            replaceWith: "artifactId>${{ parameters.artifactId }}-"
-          - search: "name>mb-transfers-"
-            replaceWith: "name>${{ parameters.artifactId }}-"
-          - search: "module>mb-transfers-"
-            replaceWith: "module>${{ parameters.artifactId }}-"
+          version: ${{ parameters.version }}
+          description: ${{ parameters.description }}
 
     - id: publish
       name: Publicar en GitHub
@@ -66,13 +59,13 @@ spec:
         repoVisibility: public
 
     - id: register
-      name: Registrar componente
+      name: Registrar componente en catálogo
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        repoContentsUrl: "${{ steps.publish.output.repoContentsUrl }}"
         catalogInfoPath: /catalog-info.yaml
 
   output:
     links:
       - title: Ver repositorio en GitHub
-        url: ${{ steps.publish.output.remoteUrl }}
+        url: "${{ steps.publish.output.remoteUrl }}"
