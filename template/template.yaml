@@ -51,8 +51,26 @@ spec:
           - from: './mb-transfers'
             to: "./${{ parameters.artifactId }}"
 
+    - id: rename-submodules
+      name: Renombrar carpetas internas
+      action: filesystem:rename
+      input:
+        files:
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-api"
+            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-api"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-commons"
+            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-commons"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-facade"
+            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-facade"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-model"
+            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-model"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-persistence"
+            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-persistence"
+          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-service"
+            to: "./${{ parameters.artifactId }}/${{ parameters.groupId }}-${{ parameters.artifactId }}-service"
+
     - id: replace
-      name: Reemplazar groupId/artifactId
+      name: Reemplazar groupId/artifactId en archivos
       action: search:replace
       input:
         dir: "./${{ parameters.artifactId }}"
