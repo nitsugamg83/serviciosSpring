@@ -35,8 +35,7 @@ spec:
       name: Obtener base
       action: fetch:template
       input:
-        url: github.com/nitsugamg83/serviciosSpring
-        templatePath: skeleton
+        url: https://github.com/nitsugamg83/serviciosSpring/tree/main/skeleton
         targetPath: ./${{ parameters.artifactId }}
         values:
           name: ${{ parameters.name }}
