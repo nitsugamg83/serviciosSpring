@@ -15,11 +15,21 @@ spec:
     - title: Información del componente
       required:
         - componentId
+        - groupId
+        - artifactId
       properties:
         componentId:
           type: string
           title: Nombre del componente
           description: Nombre único del microservicio
+        groupId:
+          type: string
+          title: GroupId del proyecto (paquete base)
+          default: com.ejemplo.servicio
+        artifactId:
+          type: string
+          title: ArtifactId raíz (nombre del microservicio)
+          default: mb-transfers
 
   steps:
     - id: fetch
@@ -30,6 +40,27 @@ spec:
         targetPath: .
         values:
           componentId: ${{ parameters.componentId }}
+          groupId: ${{ parameters.groupId }}
+          artifactId: ${{ parameters.artifactId }}
+
+    - id: rename-root
+      name: Renombrar carpeta raíz
+      action: filesystem:move
+      input:
+        files:
+          - from: './mb-transfers'
+            to: './${{ parameters.artifactId }}'
+
+    - id: replace
+      name: Reemplazar groupId/artifactId
+      action: search:replace
+      input:
+        dir: './${{ parameters.artifactId }}'
+        replacements:
+          - search: 'axity.mbtransfers'
+            replaceWith: ${{ parameters.groupId }}
+          - search: 'mb-transfers'
+            replaceWith: ${{ parameters.artifactId }}
 
     - id: publish
       name: Publicar en GitHub
