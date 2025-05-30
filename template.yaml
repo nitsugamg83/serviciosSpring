@@ -35,20 +35,13 @@ spec:
       name: Obtener base
       action: fetch:template
       input:
-        url: https://github.com/nitsugamg83/serviciosSpring/archive/main.zip
-        targetPath: ./work
+        url: github.com/nitsugamg83/serviciosSpring
+        templatePath: skeleton
+        targetPath: ./${{ parameters.artifactId }}
         values:
           name: ${{ parameters.name }}
           groupId: ${{ parameters.groupId }}
           artifactId: ${{ parameters.artifactId }}
-
-    - id: rename-folder
-      name: Renombrar carpeta raíz
-      action: filesystem:move
-      input:
-        files:
-          - from: './work/mb-transfers'
-            to: './${{ parameters.artifactId }}'
 
     - id: log-result
       name: Éxito
