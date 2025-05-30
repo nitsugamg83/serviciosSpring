@@ -1,4 +1,3 @@
-# catalog-info.yaml
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -25,21 +24,24 @@ spec:
       name: Descargar template
       action: fetch:template
       input:
-        url: https://github.com/tu-org/tu-repo/archive/main.zip
+        url: https://github.com/nitsugamg83/serviciosSpring
         values:
           componentId: ${{ parameters.componentId }}
+
     - id: publish
       name: Publicar en GitHub
       action: publish:github
       input:
-        repoUrl: github.com/tu-org/${{ parameters.componentId }}
+        repoUrl: github.com/nitsugamg83/${{ parameters.componentId }}
         repoVisibility: public
+
     - id: register
       name: Registrar componente
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: /catalog-info.yaml
+
   output:
     links:
       - title: Ver repositorio en GitHub
