@@ -5,16 +5,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>${groupId}</groupId>
-    <artifactId>${artifactId}</artifactId>
-    <version>${version}</version>
+    <groupId>{{ parameters.groupId }}</groupId>
+    <artifactId>{{ parameters.artifactId }}</artifactId>
+    <version>{{ parameters.version }}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>${artifactId}-commons</artifactId>
+  <artifactId>{{ parameters.artifactId }}-commons</artifactId>
   <packaging>jar</packaging>
-  <name>${name}-commons</name>
-  <description>Componentes comunes reutilizables del microservicio ${name}</description>
+  <name>{{ parameters.artifactId }}-commons</name>
+  <description>Componentes comunes reutilizables del microservicio {{ parameters.artifactId }}</description>
 
   <dependencies>
     <!-- Spring AOP -->

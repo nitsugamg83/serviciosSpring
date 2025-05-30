@@ -5,16 +5,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>${groupId}</groupId>
-    <artifactId>${artifactId}</artifactId>
-    <version>${version}</version>
+    <groupId>{{ parameters.groupId }}</groupId>
+    <artifactId>{{ parameters.artifactId }}</artifactId>
+    <version>{{ parameters.version }}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>${artifactId}-model</artifactId>
+  <artifactId>{{ parameters.artifactId }}-model</artifactId>
   <packaging>jar</packaging>
-  <name>${name}-model</name>
-  <description>Modelo de datos del microservicio ${name}</description>
+  <name>{{ parameters.artifactId }}-model</name>
+  <description>Modelo de datos del microservicio {{ parameters.artifactId }}</description>
 
   <dependencies>
     <!-- Lombok -->

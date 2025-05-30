@@ -4,23 +4,23 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>${groupId}</groupId>
-    <artifactId>${artifactId}</artifactId>
-    <version>${version}</version>
+    <groupId>{{ parameters.groupId }}</groupId>
+    <artifactId>{{ parameters.artifactId }}</artifactId>
+    <version>{{ parameters.version }}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>${artifactId}-api</artifactId>
+  <artifactId>{{ parameters.artifactId }}-api</artifactId>
   <packaging>jar</packaging>
-  <name>${name}-api</name>
-  <description>Capa REST de exposición del microservicio ${name}</description>
+  <name>{{ parameters.artifactId }}-api</name>
+  <description>Capa REST de exposición del microservicio {{ parameters.artifactId }}</description>
 
   <dependencies>
     <!-- Facade del microservicio -->
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-facade</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-facade</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
 
     <!-- Spring Boot Web -->

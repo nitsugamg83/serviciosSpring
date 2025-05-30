@@ -4,48 +4,48 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>${groupId}</groupId>
-    <artifactId>${parentArtifactId}</artifactId>
-    <version>${version}</version>
+    <groupId>{{ parameters.groupId }}</groupId>
+    <artifactId>{{ parameters.parentArtifactId }}</artifactId>
+    <version>{{ parameters.version }}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <packaging>jar</packaging>
-  <groupId>${groupId}</groupId>
-  <artifactId>${artifactId}-coverage</artifactId>
-  <name>${name}-coverage</name>
+  <groupId>{{ parameters.groupId }}</groupId>
+  <artifactId>{{ parameters.artifactId }}-coverage</artifactId>
+  <name>{{ parameters.artifactId }}-coverage</name>
   <description>Jacoco aggregate coverage report</description>
 
   <dependencies>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-api</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-api</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-commons</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-commons</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-facade</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-facade</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-model</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-model</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-persistence</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-persistence</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-service</artifactId>
-      <version>${version}</version>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-service</artifactId>
+      <version>{{ parameters.version }}</version>
     </dependency>
   </dependencies>
 
@@ -54,14 +54,14 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.version}</version>
+        <version>{{ parameters.jacocoVersion }}</version>
         <configuration>
           <excludes>
-            <exclude>${groupIdPath}/model/*</exclude>
-            <exclude>${groupIdPath}/**/*Dto.*</exclude>
-            <exclude>${groupIdPath}/commons/messages/*</exclude>
-            <exclude>${groupIdPath}/Application.*</exclude>
-            <exclude>${groupIdPath}/commons/aspectj/*</exclude>
+            <exclude>{{ parameters.groupIdPath }}/model/*</exclude>
+            <exclude>{{ parameters.groupIdPath }}/**/*Dto.*</exclude>
+            <exclude>{{ parameters.groupIdPath }}/commons/messages/*</exclude>
+            <exclude>{{ parameters.groupIdPath }}/Application.*</exclude>
+            <exclude>{{ parameters.groupIdPath }}/commons/aspectj/*</exclude>
           </excludes>
         </configuration>
         <executions>

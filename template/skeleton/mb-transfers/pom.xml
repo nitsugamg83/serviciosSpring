@@ -11,20 +11,20 @@
     <relativePath />
   </parent>
 
-  <groupId>${project.groupId}</groupId>
-  <artifactId>${project.artifactId}</artifactId>
-  <version>${project.version}</version>
+  <groupId>{{ parameters.groupId }}</groupId>
+  <artifactId>{{ parameters.artifactId }}</artifactId>
+  <version>{{ parameters.version }}</version>
   <packaging>pom</packaging>
-  <name>${project.artifactId}</name>
-  <description>${project.description}</description>
+  <name>{{ parameters.artifactId }}</name>
+  <description>{{ parameters.description }}</description>
 
   <properties>
     <java.version>17</java.version>
     <jackson.version>2.13.3</jackson.version>
     <jacoco.version>0.8.8</jacoco.version>
     <maven-eclipse-plugin.version>3.13.0</maven-eclipse-plugin.version>
-    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-    <sonar.projectName>${project.artifactId}</sonar.projectName>
+    <sonar.projectKey>{{ parameters.groupId }}:{{ parameters.artifactId }}</sonar.projectKey>
+    <sonar.projectName>{{ parameters.artifactId }}</sonar.projectName>
     <sonar.host.url>http://localhost:9000</sonar.host.url>
   </properties>
 
@@ -32,34 +32,34 @@
     <dependencies>
       <!-- Submódulos -->
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}-commons</artifactId>
-        <version>${project.version}</version>
+        <groupId>{{ parameters.groupId }}</groupId>
+        <artifactId>{{ parameters.artifactId }}-commons</artifactId>
+        <version>{{ parameters.version }}</version>
       </dependency>
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}-model</artifactId>
-        <version>${project.version}</version>
+        <groupId>{{ parameters.groupId }}</groupId>
+        <artifactId>{{ parameters.artifactId }}-model</artifactId>
+        <version>{{ parameters.version }}</version>
       </dependency>
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}-persistence</artifactId>
-        <version>${project.version}</version>
+        <groupId>{{ parameters.groupId }}</groupId>
+        <artifactId>{{ parameters.artifactId }}-persistence</artifactId>
+        <version>{{ parameters.version }}</version>
       </dependency>
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}-service</artifactId>
-        <version>${project.version}</version>
+        <groupId>{{ parameters.groupId }}</groupId>
+        <artifactId>{{ parameters.artifactId }}-service</artifactId>
+        <version>{{ parameters.version }}</version>
       </dependency>
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}-facade</artifactId>
-        <version>${project.version}</version>
+        <groupId>{{ parameters.groupId }}</groupId>
+        <artifactId>{{ parameters.artifactId }}-facade</artifactId>
+        <version>{{ parameters.version }}</version>
       </dependency>
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}-api</artifactId>
-        <version>${project.version}</version>
+        <groupId>{{ parameters.groupId }}</groupId>
+        <artifactId>{{ parameters.artifactId }}-api</artifactId>
+        <version>{{ parameters.version }}</version>
       </dependency>
 
       <!-- Dependencias comunes -->
@@ -125,12 +125,12 @@
   </dependencyManagement>
 
   <modules>
-    <module>${project.artifactId}-commons</module>
-    <module>${project.artifactId}-model</module>
-    <module>${project.artifactId}-persistence</module>
-    <module>${project.artifactId}-service</module>
-    <module>${project.artifactId}-facade</module>
-    <module>${project.artifactId}-api</module>
+    <module>{{ parameters.artifactId }}-commons</module>
+    <module>{{ parameters.artifactId }}-model</module>
+    <module>{{ parameters.artifactId }}-persistence</module>
+    <module>{{ parameters.artifactId }}-service</module>
+    <module>{{ parameters.artifactId }}-facade</module>
+    <module>{{ parameters.artifactId }}-api</module>
     <module>coverage-module</module>
   </modules>
 

@@ -5,21 +5,21 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>${groupId}</groupId>
-    <artifactId>${artifactId}</artifactId>
-    <version>${version}</version>
+    <groupId>{{ parameters.groupId }}</groupId>
+    <artifactId>{{ parameters.artifactId }}</artifactId>
+    <version>{{ parameters.version }}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>${artifactId}-facade</artifactId>
+  <artifactId>{{ parameters.artifactId }}-facade</artifactId>
   <packaging>jar</packaging>
-  <name>${name}-facade</name>
-  <description>Integraciones externas para ${name}</description>
+  <name>{{ parameters.artifactId }}-facade</name>
+  <description>Integraciones externas para {{ parameters.artifactId }}</description>
 
   <dependencies>
     <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>${artifactId}-service</artifactId>
+      <groupId>{{ parameters.groupId }}</groupId>
+      <artifactId>{{ parameters.artifactId }}-service</artifactId>
     </dependency>
 
     <!-- GraphQL -->
