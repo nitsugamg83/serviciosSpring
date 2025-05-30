@@ -35,25 +35,17 @@ spec:
       action: fetch:template
       input:
         url: ./skeleton
-        targetPath: .
+        targetPath: ./
         values:
-          componentId: "${{ parameters.componentId }}"
-          groupId: "${{ parameters.groupId }}"
-          artifactId: "${{ parameters.artifactId }}"
-
-    - id: rename-root
-      name: Renombrar carpeta raíz
-      action: filesystem:move
-      input:
-        files:
-          - from: ./mb-transfers
-            to: "./${{ parameters.artifactId }}"
+          componentId: ${{ parameters.componentId }}
+          groupId: ${{ parameters.groupId }}
+          artifactId: ${{ parameters.artifactId }}
 
     - id: replace-identifiers
       name: Reemplazar groupId y artifactId
       action: search:replace
       input:
-        dir: "./${{ parameters.artifactId }}"
+        dir: .
         replacements:
           - search: "axity.mbtransfers"
             replaceWith: "${{ parameters.groupId }}"
@@ -66,24 +58,6 @@ spec:
           - search: "module>mb-transfers-"
             replaceWith: "module>${{ parameters.artifactId }}-"
 
-    - id: rename-modules
-      name: Renombrar carpetas de módulos hijos
-      action: filesystem:move
-      input:
-        files:
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-api"
-            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-api"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-commons"
-            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-commons"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-model"
-            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-model"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-persistence"
-            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-persistence"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-service"
-            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-service"
-          - from: "./${{ parameters.artifactId }}/axity.mbtransfers-facade"
-            to: "./${{ parameters.artifactId }}/${{ parameters.artifactId }}-facade"
-
     - id: publish
       name: Publicar en GitHub
       action: publish:github
@@ -95,10 +69,10 @@ spec:
       name: Registrar componente
       action: catalog:register
       input:
-        repoContentsUrl: "${{ steps.publish.output.repoContentsUrl }}"
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: /catalog-info.yaml
 
   output:
     links:
       - title: Ver repositorio en GitHub
-        url: "${{ steps.publish.output.remoteUrl }}"
+        url: ${{ steps.publish.output.remoteUrl }}
