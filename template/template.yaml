@@ -62,8 +62,7 @@ spec:
       name: Registrar en el catálogo
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
-        catalogInfoPath: catalog-info.yaml
+        location: url:${{ steps.publish.output.remoteUrl }}/blob/main/catalog-info.yaml
 
   output:
     links:
