@@ -62,7 +62,8 @@ spec:
       name: Registrar en el catálogo
       action: catalog:register
       input:
-        location: url:https://github.com/nitsugamg83/${{ parameters.componentId }}/blob/main/catalog-info.yaml
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: catalog-info.yaml
 
   output:
     links:
