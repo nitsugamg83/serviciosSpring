@@ -55,8 +55,8 @@ spec:
       name: Publicar en GitHub
       action: publish:github
       input:
-        repoUrl: github.com?repo=${{ parameters.componentId }}&owner=nitsugamg83
-        repoVisibility: public
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: catalog-info.yaml
 
     - id: register
       name: Registrar en el catálogo
