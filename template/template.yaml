@@ -58,14 +58,10 @@ spec:
         repoUrl: github.com?repo=${{ parameters.componentId }}&owner=nitsugamg83
         repoVisibility: public
 
+
     - id: register
       name: Registrar en el catálogo
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: catalog-info.yaml
-
-  output:
-    links:
-      - title: Ver repositorio en GitHub
-        url: ${{ steps.publish.output.remoteUrl }}
