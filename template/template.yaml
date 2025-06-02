@@ -42,7 +42,7 @@ spec:
       name: Descargar template
       action: fetch:template
       input:
-        url: ./skeleton
+        url: ./skeleton/${{ parameters.artifactId }}
         targetPath: .
         values:
           componentId: ${{ parameters.componentId }}
