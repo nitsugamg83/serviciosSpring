@@ -44,18 +44,17 @@ spec:
       input:
         url: ./skeleton
         targetPath: .
+        templateEngine: cookiecutter
         values:
-          componentId: ${{ parameters.componentId }}
-          groupId: ${{ parameters.groupId }}
-          artifactId: ${{ parameters.artifactId }}
-          version: ${{ parameters.version }}
-          description: ${{ parameters.description }}
+          componentId: '{{ parameters.componentId }}'
+          groupId: '{{ parameters.groupId }}'
+          artifactId: '{{ parameters.artifactId }}'
+          version: '{{ parameters.version }}'
+          description: '{{ parameters.description }}'
 
     - id: publish
       name: Publicar en GitHub
       action: publish:github
       input:
-        repoUrl: github.com?repo=${{ parameters.componentId }}&owner=nitsugamg83
+        repoUrl: github.com?repo={{ parameters.componentId }}&owner=nitsugamg83
         repoVisibility: public
-
-
